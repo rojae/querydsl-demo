@@ -22,6 +22,9 @@ class ApplicationTest {
 	@Autowired
 	private EntityManager em;
 
+	/**
+	 * QueryDSL 설정, 테스트
+ 	 */
 	@Test
 	@Transactional
 	void contextLoads() {
