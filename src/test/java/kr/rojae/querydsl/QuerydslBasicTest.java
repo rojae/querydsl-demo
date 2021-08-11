@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+import static kr.rojae.querydsl.entity.QMember.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -58,13 +59,26 @@ public class QuerydslBasicTest {
     }
 
     @Test
-    public void startQuerydsl(){
-        Member findMember = query.select(QMember.member)
-                .from(QMember.member)
-                .where(QMember.member.username.eq("member1"))
+    public void startQuerydsl() {
+        Member findMember = query.select(member)
+                .from(member)
+                .where(member.username.eq("member1"))
                 .fetchOne();
 
         assert findMember != null;
         assertThat(findMember.getUsername()).isEqualTo("member1");
+    }
+
+    @Test
+    public void search() {
+        Member findMember = query.selectFrom(member)
+                .where(member.username.eq("member1")
+                        , member.age.eq(10)
+                )
+                .fetchOne();
+
+        assert findMember != null;
+        assertThat(findMember.getUsername()).isEqualTo("member1");
+
     }
 }
